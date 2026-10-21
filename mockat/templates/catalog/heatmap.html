@@ -1,0 +1,32 @@
+<html>
+	<head>
+		<title>Schedule heatmap {{year}}</title>
+		<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+	</head>
+	<body>
+		<a href="?year={{year|add:-1}}">&laquo; {{year|add:-1}}</a> |
+		<b>{{year}}</b> |
+		<a href="?year={{year|add:1}}">{{year|add:1}} &raquo;</a>
+		<div id="heatmap" style="width: 1000px; height: 260px;"></div>
+		{{total}} planned exposures in {{year}}
+		{{ data|json_script:"heatmap-data" }}
+		<script>
+			var data = JSON.parse(document.getElementById('heatmap-data').textContent);
+			var chart = echarts.init(document.getElementById('heatmap'));
+			chart.setOption({
+				title: {top: 10, left: 'center', text: '{{title}}' },
+				tooltip: {formatter: function (p) { return p.value[0] + ': ' + p.value[1] + ' exposures'; }},
+				visualMap: {min: 0, max: {{maxcnt}}, type: 'piecewise', orient: 'horizontal',
+					left: 'center', top: 40},
+				calendar: {top: 110, left: 40, right: 30, cellSize: ['auto', 16],
+					range: '{{year}}', itemStyle: {borderWidth: 0.5}, yearLabel: {show: false}},
+				series: {type: 'heatmap', coordinateSystem: 'calendar', data: data, cursor: 'pointer'}
+			});
+			chart.on('click', function (p) {
+				var url = '{% url 'schday' '0000-00-00' %}'.replace('0000-00-00', p.value[0]);
+				var line = new URLSearchParams(location.search).get('line');
+				location.href = line ? url + '?line=' + line : url;
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,10 @@
+<h1>Planned objectives</h1>
+<b>total {{objlist|length}} ({{length}} secs)</b>
+<dl>
+{% for o in objlist %}
+<dt>{% if o.target %}<a href="{% url 'src' o.target.pk %}">{{o.target}}</a> [RA/dec: {{o.target.pRA|floatformat:2}} / {{o.target.pdec|floatformat:2}}]{% else %}-{% endif %}</dt>
+<dd>{{o.date|date:'H:i:s'}} [{{o.expo}} s] {% if o.repeat >= 2 %} repeated {{o.repeat}} x {% endif %}</a></dd>
+{% empty %}
+<dt>nothing planned</dt>
+{% endfor %}
+</dl>

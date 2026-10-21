@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lightcurves [{{obs.id}}]</title>
+    <link rel="stylesheet" href="{{staturl}}css/theme.css" />
+    <script>
+    function logger(){
+        var logbox = document.getElementById("logscale").checked;
+        alert("Log "+logbox);
+    }
+    </script>
+</head>
+<body>
+    <div><a href="{% url 'obslist' %}">all observations</a></div>
+	{% autoescape off %}
+            {{ plot_div }}
+    {% endautoescape %}
+    <a href="{% url 'data' obs.pk %}">download</a><br/>
+    <a href="./{% if plot_div.layout.yaxis_type == 'log'%}{% else %}?log=1{% endif %}">Log scale</a> <input type="checkbox" id="logscale" value="0" onclick="logger()"/>
+    <div>start: {{obs.dfrom }}</div>
+    </body>
+</html>

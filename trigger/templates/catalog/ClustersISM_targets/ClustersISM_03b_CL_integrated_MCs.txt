@@ -1,0 +1,42 @@
+#RESOURCE=yCat_35170050
+#Name: J/A+A/517/A50
+#Title: Ages & luminosities of young SMC/LMC star clusters (Glatt+, 2010)
+#Table J_A_A_517_A50_clusters:
+#Name: J/A+A/517/A50/clusters
+#Title: Ages, luminosities, reddenings, radii, cross-identifications of LMC and SMC clusters
+#---Details of Columns:
+    Name              (A7)    Identification number (LMCNNNN or SMCNNNN) [ucd=meta.id;meta.main]
+    R (arcmin)        (F6.3)  Radius (2) [ucd=phys.angSize]
+    RAJ2000 ("h:m:s") (A8)    Right ascension (J2000) [ucd=pos.eq.ra;meta.main]
+    DEJ2000 ("d:m:s") (A9)    Declination (J2000) [ucd=pos.eq.dec;meta.main]
+    Vmag (mag)        (F6.3)  V-band magnitude [ucd=phot.mag;em.opt.V]
+    SimbadName        (a17)   Simbad column added by the CDS [ucd=meta.id]
+------- ------ -------- --------- ------ -----------------
+               R                                          
+        R (a   AJ2000 ( DEJ2000   Vmag                    
+Name    rcmin) "h:m:s") ("d:m:s") (mag)  SimbadName       
+------- ------ -------- --------- ------ -----------------
+LMC0120  1.700 04 50 37 -69 59 06  9.469 NGC1711
+LMC0136  0.360 04 51 41 -72 13 13 19.730 KMHK183
+LMC0213  1.020 04 55 14 -68 12 17  9.385 NGC1755
+LMC0442  1.450 05 04 14 -66 26 05  8.868 NGC1818
+LMC0561  1.500 05 08 44 -68 45 33  8.620 NGC1850
+LMC0618  0.260 05 10 39 -66 43 42 19.570 BSDL783
+LMC1021  0.670 05 27 40 -69 08 03  9.394 NGC1984
+LMC1075  0.900 05 30 21 -66 53 02  9.931 NGC2002
+LMC1088  1.450 05 30 40 -67 17 13  9.219 NGC2004
+LMC1214  0.300 05 34 59 -72 22 57 20.110 LW247
+LMC1241  1.300 05 36 28 -66 59 26  9.982 NGC2041
+LMC1357  1.250 05 42 08 -69 12 42  8.898 NGC2100
+LMC1502  0.300 05 49 09 -65 42 51 19.370 KMHK1402
+LMC1587  0.340 05 53 27 -71 41 10 19.460 KMHK1507
+LMC1635  1.400 05 57 34 -69 11 48  9.924 NGC2157
+LMC1857  0.300 04 53 11 -66 55 24 19.010 BSDL151
+LMC2121  0.380 05 11 29 -65 41 44 19.220 H88 196
+LMC2338  0.260 05 22 14 -68 45 56 21.180 BSDL1400
+LMC2358  0.350 05 22 58 -65 14 33 20.470 BSDL1420
+LMC2479  0.200 05 26 56 -66 00 58 19.660 BSDL1729
+LMC2644  0.240 05 32 40 -67 10 10 19.780 BSDL2245
+LMC2960  0.290 05 48 20 -67 21 22 20.930 BMG92
+LMC3035  0.400 05 54 42 -67 42 28 20.370 BMG163
+SMC0251  1.325 00 56 19 -72 27 50  9.200 NGC330

@@ -1,0 +1,9 @@
+<h2>Fermi GBM triggers for month {{month}}</h2>
+<ul>
+	<a href="{% url 'ymonth' pdat.0 pdat.1 %}">previous</a> - 	<a href="{% url 'ymonth' ndat.0 ndat.1 %}">next</a>
+
+	{% for ite in selection %}
+	<li><a href="https://gcn.gsfc.nasa.gov/other/{{ite.id}}.fermi">{{ ite.id }}</a>: {{ite.date}}  : RA {{ite.pRA}}, Dec {{ite.pdec}} | 
+	{% if "inten" in ite.notes %} intensity {{ite.notes.inten}} {% endif %}</li>
+	{% endfor %}
+</ul>

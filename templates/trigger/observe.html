@@ -1,0 +1,9 @@
+<h2>Observation {{obs.desc}}</h2>
+<h3> from {{obs.dfrom|date:"Y/m/d H:i"}} to {{obs.dto|date:"Y/m/d H:i"}}</h3>
+file <tt>{{obs.jfile}}</tt> contains {{obs.nspec}} spectra
+<ul>
+	{% for fm in obs.fermi_set.all %}
+	<li><a href="https://gcn.gsfc.nasa.gov/other/{{fm.id}}.fermi">{{ fm.id }}</a>: {{fm.date|date:"Y/m/d H:i:s"}}  show <a href="{% url 'plot' obs.id %}?cent={{fm.get_pos}}&log=1">in data</a></li> <br/> 
+    <img src="{{fm.quick}}" style="{width:100px;}"> 
+	{% endfor %}
+</ul>

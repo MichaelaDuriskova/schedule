@@ -1,0 +1,8 @@
+django
+numpy
+scipy
+astropy
+sgp4
+ortools
+plotly
+requests

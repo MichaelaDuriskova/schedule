@@ -1,0 +1,126 @@
+<html>
+
+<head>
+	<title>{{obs.desc}}</title>
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+
+    <py-env>
+        - pandas
+        - plotly
+    </py-env>
+</head>
+
+<body>
+    <div class="jumbotron">
+        <h1>Some lightcurves</h1>
+        <p class="lead">
+            {{obs.desc}}
+        </p>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-2 p-2 ml-4 mb-1">
+            <button type="button" class="btn btn-secondary">Select chart from list:</button>
+        </div>
+        <div class="col-sm-4 p-2 mr-4 mb-1">
+            <select class="form-control" id="select">
+				{% for bn in bands %}
+                <option value="Band{{bn}}">Band{{bn}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+		From <input type="text" name="from" value="{{from}}"> to <input type="text" name="to" value="{{to}}">
+		<select class="form-control" id="chunk">
+			{% for c in camps %}
+			<option value="{{c}}">Camp {{c}}</option>
+			{% endfor %}
+		</select>
+		</div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-6 p-2 shadow ml-4 mr-4 mb-4 bg-white rounded">
+            <div id="chart1"></div>
+        </div>
+    </div>
+
+	<input type="button" id="update" value="Update">
+    <script type='text/javascript'>
+        function plot(graph, chart) {
+            var figure = JSON.parse(graph)
+            Plotly.newPlot(chart, figure, {});
+        }
+    </script>
+
+    <py-script>
+        # Import libraries
+        import js
+        import json
+        import plotly
+        import plotly.express as px
+
+        ## Get the data
+        from pyodide.http import open_url
+        sf={}
+        def load(campid,path="{% url 'data' obs.pk %}"):
+            path=path[:path[:-1].rfind('/')+1]+str(campid)+"/"
+            data=open_url(path+"{{query}}").read()
+            lines=data.split('\n')
+            return [a.split()[:3] for a in lines]
+        
+        specs=load({{obs.pk}})
+        sf['Time']=[float(a[0]) for a in specs]
+        for i,bn in enumerate({{bands}}):
+            sf['Band%i'%bn]=[float(a[i+1]) for a in specs]
+
+        def plot(chart):
+            fig = px.line(sf,
+            x="Time", y=chart,
+            width=1200, height=400)
+            graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+            js.plot(graphJSON,"chart1")
+           
+            
+        from js import document
+        from pyodide import create_proxy
+
+        def selectChange(event):
+            choice = document.getElementById("select").value
+            plot(choice)
+            
+        def updateClick(event,bands={{bands}}):
+            chunk = document.getElementById("chunk").value
+            specs=load(chunk)
+            sf['Time']=[float(a[0]) for a in specs]
+            for i,bn in enumerate(bands):
+                sf['Band%i'%bn]=[float(a[i+1]) for a in specs]
+            choice = document.getElementById("select").value
+            plot(choice)
+
+        def setup():
+            # Create a JsProxy for the callback function
+            change_proxy = create_proxy(selectChange)
+            load_proxy = create_proxy(updateClick)
+
+            e = document.getElementById("select")
+            e.addEventListener("change", change_proxy)
+            
+            e = document.getElementById("chunk")
+            e.addEventListener("change", load_proxy)
+            
+            e = document.getElementById("update")
+            e.addEventListener("click", load_proxy)
+
+        setup()
+
+        plot('Band{{bands.0}}')
+    </py-script>
+</body>
+
+</html>

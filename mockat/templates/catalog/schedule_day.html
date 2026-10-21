@@ -1,0 +1,11 @@
+<h1>Planned exposures on {{day|date:'Y-m-d'}}</h1>
+<b>{{obs|length}} exposures, total {{total|floatformat:2}} min</b>
+<br/><a href="{% url 'heatmap' %}?year={{day.year}}">back to heatmap</a>
+<dl>
+{% for o in obs %}
+<dt>{% if o.target %}<a href="{% url 'src' o.target.pk %}">{{o.target}}</a> [RA/dec: {{o.target.pRA|floatformat:2}} / {{o.target.pdec|floatformat:2}}]{% else %}-{% endif %}</dt>
+<dd>{{o.date|date:'H:i:s'}} [{{o.expo}} s] in <a href="{% url 'sched' o.line|floatformat:0 %}">plan {{o.line|floatformat:0}}</a></dd>
+{% empty %}
+<dt>nothing planned</dt>
+{% endfor %}
+</dl>

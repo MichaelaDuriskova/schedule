@@ -1,0 +1,12 @@
+<html><head><title>GRB Alpha observations</title></head>
+<body>
+<h2>{{ olist|length }} GRB Alpha Observations</h2>
+<ul>
+	{% for o in olist %}
+	<li><a href="{% url 'observe' o.id %}">{{ o.desc }}</a>: {{ o.dfrom|date:"Y/m/d H:i" }} -- {{ o.dto|date:"Y/m/d H:i" }} | {{o.nspec}} spectra |  {{o.fermi_set.count}} GBM trigger{{ o.fermi_set.count|pluralize }} 
+	| <a href="{% url 'plot' o.id %}">plot</a> </li> {% if o.gcn_set.count > 0 %}| {{o.gcn_set.count}} GCN 
+    {% for g in o.gcn_set.all %} <a href="{{g.link}}">{{g.gid}}</a> {% endfor %} 
+    {% endif %} {% endfor %}
+</ul>
+</body>
+</html>

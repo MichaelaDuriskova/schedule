@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+scheduler/
+backup/
+db.sqlite3
+db_fno.sqlite3
+*.npz
+*.sql
+line*_schedule.txt
+.DS_Store
